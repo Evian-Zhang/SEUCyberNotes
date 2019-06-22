@@ -1,0 +1,733 @@
+\documentclass[UTF8]{ctexrep}
+\usepackage{xeCJK}
+\setCJKmainfont[BoldFont=STHeitiSC-Medium, ItalicFont=AdobeKaitiStd-Regular]{FZXSSJW--GB1-0}
+\setCJKsansfont{HiraginoSansGB-W3}
+\setCJKmonofont{FZLTXHK--GBK1-0}
+\CTEXsetup[format+={\raggedright}]{section}
+
+\usepackage{fontspec}
+\setmainfont{TimesNewRomanPSMT}
+\setsansfont{Verdana}
+\setmonofont{CourierNewPSMT}
+
+\usepackage{float}
+
+\usepackage{geometry}
+\geometry{a4paper,left=3cm,right=3cm,top=2.5cm,bottom=2.5cm}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\chead{\itshape 通信原理笔记整理}
+\rhead{\thepage}
+\renewcommand\headrulewidth{0.6pt}
+
+\renewcommand{\labelitemii}{$\circ$}
+
+\usepackage{amsmath}
+\usepackage{esvect}
+\usepackage{bm}
+\usepackage{upgreek}
+\def \paral {/\!/}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{extarrows}
+\usepackage{mathrsfs}
+\usepackage[amssymb]{SIunits}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\newcommand{\infi}{\infty}
+\newcommand{\ext}{\displaystyle}
+\newcommand{\arsinh}{\mathrm{arsinh}\,}
+\newcommand{\arcosh}{\mathrm{arcosh}\,}
+\newcommand{\artanh}{\mathrm{artanh}\,}
+\newcommand{\dif}{\mathop{}\!{}\mathrm{d}}
+\newcommand{\ic}{\mathrm{i}}
+\newcommand{\Tr}{\mathrm{T}}
+\newcommand{\ke}{\mathrm{k}}
+\newcommand{\p}{\mathrm{p}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\def\vec#1{\vv{\bm #1}}
+\def\xvec#1#2{\vv{{\bm #1}_{#2}}}
+\def\yvec#1#2{\vv{{\bm #1}^{#2}}}
+\def\abs#1{\left| #1 \right|}
+\def\der#1#2{\frac{\dif #1}{\dif #2}}
+\def\pth#1{\left( {#1}\right)}
+\def\brace#1{\left\{ {#1}\right\}}
+\def\bit{{\mathrm{b}}}
+\def\Baud{{\mathrm{B}}}
+\renewcommand{\rem}{{\bfseries Remark}}
+
+\usepackage{hyperref}
+\hypersetup{pdfauthor={张曙},
+pdftitle={通信原理笔记整理}
+}
+\begin{document}
+\setlength\parindent{0em}
+\chapter{绪论}
+\thispagestyle{fancy}
+\begin{enumerate}
+\item 通信的基本概念
+\begin{itemize}
+\item 通信\\
+传递消息中所包含的信息。
+\item 消息\\
+是物质或精神状态的一种反应。
+\item 信息\\
+是消息中包含的有效内容。
+\end{itemize}
+\item 实现通信的方式和手段
+\begin{itemize}
+\item 非电的
+\item 电的
+\end{itemize}
+\item 模拟信号和数字信号
+\begin{itemize}
+\item 模拟信号\\
+代表消息的信号参量取值连续\\
+\rem\\
+模拟信号的取样为模拟信号
+\item 数字信号\\
+代表消息的信号参量取值为有限个\\
+\rem\\
+数字信号的取样为数字信号
+\end{itemize}
+\item 通信系统的一般模型\\
+包括信源、发送设备、信道、接收设备、信宿。
+\begin{itemize}
+\item 信源\\
+把各种消息转换成原始电信号
+\item 发送设备\\
+对原始信号完成某种变换，使之适合在信道中传输
+\item 信道\\
+信号传输的通道。提供了信源与信宿间在电气上的联系。分为有线信道与无线信道两大类
+\item 接收设备\\
+把接收到的信号反变换，转换成原始电信号
+\item 信宿\\
+将复原的原始电信号转换成相应的消息
+\end{itemize}
+\item 模拟通信系统\\
+信道中传输模拟信号的系统称为模拟通信系统。
+\item 模拟通信系统模型\\
+包括信源、调制器、信道、解调器、信宿。\par
+它包含两种变换：
+\begin{itemize}
+\item 把原始消息变为电信号
+\item 把不适合传输的基带信号通过调制器转换成频带信号
+\end{itemize}
+同时两种变换在收端都要经过反变换。
+\item 模拟通信
+\begin{itemize}
+\item 通信方式\\
+信号中某个参量连续变化
+\item 通信要求\\
+高保真地复现信息
+\item 质量准则\\
+信噪比
+\end{itemize}
+\item 数字通信系统\\
+信道中传输数字信号的系统称为数字通信系统。分为三类：
+\begin{itemize}
+\item 数字频带传输通信系统
+\item 数字基带传输通信系统
+\item 模拟信号数字化传输通信系统
+\end{itemize}
+\item 数字通信系统模型\\
+包括信息源、信源编码、加密、信源编码、数字调制、信道、数字解调、信道译码、解密、信源译码、受信者。\par
+信源编码与译码的目的：
+\begin{itemize}
+\item 提高信息传输的有效性
+\item 完成模/数转换
+\end{itemize}
+信道编码与译码的目的：增强抗干扰能力\par
+加密与解密目的：保证所传信息的安全\par
+数字调制与解调的目的：形成适合在信道中传输的带通信号\par
+同步目的：使收发两端的信号在时间上保持步调一致
+\item 数字通信
+\begin{itemize}
+\item 通信方式\\
+信号中某个参量离散取值
+\item 通信要求\\
+正确判断离散值
+\item 质量准则\\
+错误率
+\item 优点
+\begin{itemize}
+\item 抗干扰能力强，且噪声不积累\\
+信号的取值只有两个，容易判断和处理
+\item 传输差错可控\\
+通信中出现的差错可通过纠错编码技术来控制
+\item 便于处理、变换、存储
+\item 易于加密处理，且保密性好\\
+与模拟信号相比更容易加密和解密
+\end{itemize}
+\item 缺点
+\begin{itemize}
+\item 需要较大的传输带宽
+\item 对同步要求高
+\end{itemize}
+\end{itemize}
+\item 通信方式
+\begin{itemize}
+\item 单工通信\\
+消息只能单方向传输的工作方式
+\item 半双工通信\\
+通信双方都能收发消息，但不能同时收发的工作方式
+\item 全双工通信\\
+通信双方可同时进行收发消息的工作方式
+\end{itemize}
+\item 传输方式
+\begin{itemize}
+\item 并行传输\\
+将代表信息的数字信号码元序列以成组的方式在两条或两条以上的并行信道上同时传输\par
+优点：节省传输时间，速度快：不需要字符同步措施\par
+缺点：需要$n$条通信线路，成本高
+\item 串行传输\\
+将数字信号码元序列以串行方式一个码元接着一个码元地在一条信道上传输\par
+优点：只需一条通信信道，节省线路铺设费用\par
+缺点：速度慢，需要外加码组或字符同步措施
+\end{itemize}
+\item 信息量\\
+假设$P(x)$是消息$x$发生的概率，$I$表示消息中所含的信息量，则
+\[
+I=-\log_aP(x)
+\]
+
+若$a=2$, 则信息量的单位为比特，可简记为$\bit$\par
+在工程应用中，习惯上把一个二进制码元称为$1\bit$
+\item 平均信息量\\
+设一串信号是一个由$M$个符号组成的集合，其中每个符号$x_i(i=1, 2,\ldots, M)$按一定的概率$P(x_i)$独立出现，出现频率为$p_i$, 则这串信号的平均信息量
+\[
+I=\sum_{i=1}^Mp_i\log_2\frac{1}{P(x_i)}
+\]
+\item 熵\\
+设离散信源是一个由$M$个符号组成的集合，其中每个符号$x_i(i=1, 2,\ldots, M)$按一定的概率$P(x_i)$独立出现, 则该信源每个符号的平均信息量，即该信源的熵
+\[
+H=\sum_{i=1}^MP(x_i)\log_2\frac{1}{P(x_i)}
+\]
+\item 通信系统主要性能指标
+\begin{itemize}
+\item 有效性\\
+指传输一定信息量时所占用的信道资源（频带带宽和时间间隔）。常用传输速率和频带利用率来衡量
+\begin{itemize}
+\item 传输速率
+\begin{itemize}
+\item 码元传输速率$R_\Baud$\\
+单位时间传送码元的数目，单位为波特，简记为$\Baud$
+\[
+R_\Baud=\frac{1}{T}
+\]
+式中$T$为码元的持续时间
+\item 信息传输速率$R_\bit$\\
+单位时间内传递的平均信息量或比特数，单位为比特每秒，简记为$\bit\per\second$或$\mathrm{bps}$
+\[
+R_\bit=R_\Baud\log_2M
+\]
+\end{itemize}
+\item 频带利用率\\
+单位带宽内的传输速率，即
+\[
+\eta=\frac{R_\Baud}{B}
+\]
+或
+\[
+\eta =\frac{R_\bit}{B}
+\]
+\end{itemize}
+\item 可靠性\\
+指接收信息的准确程度。常用误码率和误信率来表示。
+\begin{itemize}
+\item 误码率
+\[
+P_e=\frac{\text{错误码元数}}{\text{传输总码元数}}
+\]
+\item 误信率
+\[
+P_\bit=\frac{\text{错误比特数}}{\text{传输总比特数}}
+\]
+\end{itemize}
+\end{itemize}
+\item 信号的分类
+\begin{itemize}
+\item 确知信号\\
+可以用明确数学关系时描述的信号
+\begin{itemize}
+\item 周期信号\\
+经过一段时间可以重复出现的信号，即
+\[x(t)=x(t+nT)\]
+\item 非周期信号\\
+再不会重复出现的信号
+\begin{itemize}
+\item 准周期信号\\
+由多个周期信号合成，但各信号频率不成公倍数，如
+\[x(t)=\sin t+\sin\sqrt{2}t\]
+\item 瞬态信号\\
+持续时间有限的信号，如
+\[x(t)=e^{-\beta t}A\sin\pth{2\uppi ft}\]
+\end{itemize}
+\end{itemize}
+\item 非确知信号\\
+不能用数学关系式描述的信号
+\end{itemize}
+\item 信号的能量\\
+用$s(t)$表示信号的电压或电流的值，则信号的能量
+\[
+E=\int_{-\infty}^{\infty}s^2(t)\dif t
+\]
+\item 信号的平均功率\\
+用$s(t)$表示信号的电压或电流的值，则信号的平均功率
+\[
+P=\lim_{T\to\infty}\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}s^2(t)\dif t
+\]
+\item 能量信号\\
+能量为正的有限值的信号称为能量信号。
+\item 功率信号\\
+平均功率为正的有限值的信号称为功率信号。\par
+\rem\\
+周期信号一定为功率信号。\par
+存在既不是能量信号也不是功率信号的信号，如
+\[
+s(t)=\begin{cases}t&t\geq 0\\0&t<0\end{cases}
+\]
+\item 周期函数的傅里叶级数\\
+对于周期为$T$的函数$f(t)$：
+\begin{itemize}
+\item 三角形式傅立叶级数
+\[
+\frac{a_0}{2}+\sum_{n=1}^{\infty}a_n\cos n\Omega t+b_n\sin n\Omega t
+\]
+其中
+\begin{gather*}
+a_n=\frac{2}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f(t)\cos\frac{2\uppi n}{T}t\dif t, n=0, 1, 2\ldots \\
+b_n=\frac{2}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f(t)\sin\frac{2\uppi n}{T}t\dif t, n=1, 2, 3\ldots 
+\end{gather*}
+且$\Omega=\frac{2\uppi}{T}$是角频率
+\item 指数形式傅里叶级数
+\[\sum_{n=-\infty}^{\infty}c_ne^{jn\Omega t}\]
+其中
+\[
+c_n=\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f(t)e^{-\frac{2\uppi n}{T}t}
+\]
+且$\Omega=\frac{2\uppi}{T}$是角频率
+\end{itemize}
+\item 非周期函数的傅里叶变换\\
+对于非周期函数$f(t)$, 其傅里叶变换为$F(\omega)$, 满足
+\begin{gather*}
+F(\omega)=\int_{-\infty}^{+\infty}f(t)e^{-j\omega t}\dif t\\
+f(t)=\frac{1}{2\uppi}\int_{-\infty}^{+\infty}F(\omega)e^{j\omega t}\dif \omega
+\end{gather*}
+
+若$F(\omega)=\abs{F(\omega)}e^{j\phi(\omega)}$, 则其幅度频谱为$\abs{F(\omega)}-\omega$图像，相位频谱为$\phi(\omega)-\omega$图像。
+\item 帕斯瓦尔定理
+\begin{itemize}
+\item 对于能量信号\\
+若$f(t)$是能量信号，且其傅立叶变换为$F(\omega)$, 则有
+\[E=\int_{-\infty}^{\infty}f^2(t)\dif t=\frac{1}{2\uppi}\int_{-\infty}^{\infty}\abs{F(\omega)}^2\dif\omega\]
+\item 对于周期性的功率信号\\
+若$f(t)$是周期性的功率信号，且其指数形式的傅里叶级数为$\ext\sum_{n=-\infty}^{\infty}c_ne^{j\frac{2\uppi n}{T_0}t}$, 则有
+\[S=\frac{1}{T_0}\int_{-\frac{T_0}{2}}^{\frac{T_0}{2}}f^2(t)\dif t=\sum_{n=-\infty}^{\infty}\abs{c_n}^2\]
+\end{itemize}
+\item 能量密度谱与功率密度谱
+\begin{itemize}
+\item 能量谱密度\\
+设$\epsilon_f(\omega)$为$f(t)$的能量谱密度，代表信号能量沿频率轴的分布状况。计算公式为
+\[\epsilon_f(\omega )=\abs{F(\omega)}^2\]
+则该信号的能量
+\[E=\frac{1}{2\uppi}\int_{-\infty}^{\infty}\epsilon_f(\omega)\dif\omega=\int_{-\infty}^{\infty}\epsilon_r(f)\dif f\]
+\item 功率谱密度\\
+设$\phi_f(\omega)$为$f(t)$的功率谱密度，代表信号功率沿频率轴的分布状况。对于周期信号，其计算公式为
+\[\phi_f(\omega)=2\uppi\sum_{n=-\infty}^{\infty}\abs{c_n}^2\delta\pth{\omega-n\omega_0}\]
+则该信号的平均功率
+\[S=\frac{1}{2\uppi}\int_{-\infty}^{\infty}\phi_f(\omega)\dif\omega=\int_{-\infty}^{\infty}\phi_r(f)\dif f\]
+\end{itemize}
+\item 自相关函数
+\begin{itemize}
+\item 能量信号\\
+对于能量信号$s(t)$, 其自相关函数定义为
+\[R(\tau)=\int_{-\infty}^{\infty}s(t)s(t+\tau)\dif t\]
+其性质有：
+\begin{itemize}
+\item \[R(0)=E\]
+\item $R(\tau)$与该信号的能量谱密度$\abs{S(f)}^2$是一对傅里叶变换，即：
+\begin{gather*}
+\abs{S(f)}^2=\int_{-\infty}^{\infty}R(\tau)e^{-j2\uppi f\tau}\dif \tau\\
+R(\tau)=\int_{-\infty}^{\infty}\abs{S(f)}^2e^{j2\uppi f\tau}\dif f
+\end{gather*}
+\end{itemize}
+\item 功率信号\\
+对于功率信号$s(t)$, 其自相关函数定义为
+\[R(\tau)=\lim_{T\to\infty}\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}s(t)s(t+\tau)\dif t\]
+其性质有：
+\begin{itemize}
+\item \[R(0)=P\]
+\item $R(\tau)$与该信号的功率谱密度$P(f)$是一对傅里叶变换，即
+\begin{gather*}
+P(f)=\int_{-\infty}^{\infty}R(\tau)e^{-j2\uppi f\tau}\dif \tau\\
+R(\tau)=\int_{-\infty}^{\infty}P(f)e^{j2\uppi f\tau}\dif f
+\end{gather*}
+\end{itemize}
+\end{itemize}
+\item 随机过程\\
+设$S_k(k=1, 2,\ldots)$是随机试验。每一次实验都有一条时间波形（称为样本函数），记作$x_i(t)$. 所有可能出现的结果的总体$\brace{x_1(t), x_2(t), \ldots ,x_n(t), \ldots}$构成一随机过程，记作$\xi(t)$
+\item 随机过程的一维分布函数\\
+把随机过程$\xi(t_1)$小于或等于某一数值$x_1$的概率
+\[P(\xi(t_1))\leq x_1\]
+记为$F_1(x_1, t_1)$
+\item 随机过程的一维概率密度函数\\
+设随机过程$\xi(t)$的一维分布函数为$F_1(x_1, t_1)$, 则其一维概率密度函数
+\[f_1(x_1, t_1)=\frac{\partial F_1(x_1, t_1)}{\partial x_1}\]
+\item 随机过程的$n$维分布函数\\
+设随机过程为$\xi(t)$, 其$n$维分布函数
+\[F_n(x_1, x_2, \ldots, x_n; t_1, t_2, \ldots, t_n)=P\pth{\xi(t_1)\leq x_1, \xi(t_2)\leq x_2, \ldots, \xi(t_n)\leq x_n}\]
+\item 随机过程的$n$维概率密度函数\\
+设随机过程$\xi(t)$的$n$维分布函数为$F_n(x_1, x_2, \ldots, x_n; t_1, t_2, \ldots, t_n)$, 则其$n$维概率密度函数
+\[f_n(x_1, x_2, \ldots, x_n; t_1, t_2, \ldots, t_n)=\frac{\partial ^nF_n(x_1, x_2, \ldots, x_n; t_1, t_2, \ldots, t_n)}{\partial x_1\partial x_2\cdots\partial x_n}\]
+\item 随机过程的均值\\
+设随机过程$\xi(t)$的一维概率密度函数为$f_1(x, t)$, 则其均值
+\[a(t)=E\pth{\xi(t)}=\int_{-\infty}^{\infty}xf_1(x, t)\dif x\]
+\item 随机过程的方差\\
+设随机过程$\xi(t)$的一维概率密度函数为$f_1(x, t)$, 则其方差
+\[\sigma ^2(t)=\int_{-\infty}^{\infty}x^2f_1(x, t)\dif x-\pth{a(t)}^2\]
+\item 随机过程的相关函数\\
+设随机过程$\xi(t)$的二维概率密度函数为$f_2(x_1, x_2; t_1, t_2)$, 则其相关函数
+\[R(t_1, t_2)=E\pth{\xi(t_1)\xi(t_2)}=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}x_1x_2f_2(x_1, x_2;t_1, t_2)\dif x_1\dif x_2\]
+\item 严平稳随机过程
+\begin{itemize}
+\item 定义\\
+若一个随机过程$\xi(t)$的任意有限维分布函数与时间起点无关，也就是说，对于任意的正整数$n$和所有实数$\Delta$, 有
+\[f_n(x_1, x_2,\ldots, x_n;t_1, t_2,\ldots ,t_n)=f_n(x_1, x_2,\ldots, x_n;t_1+\Delta, t_2+\Delta,\ldots ,t_n+\Delta)\]
+则称该随机过程为严平稳随机过程。
+\item 性质
+\begin{gather*}
+f_1(x_1, t_1)=f_1(x_1)\\
+f_2(x_1, x_2; t_1, t_2)=f_2(x_1, x_2; t_2-t_1)
+\end{gather*}
+\item 数字特征
+\begin{gather*}
+E\pth{\xi(t)}=\int_{-\infty}^{\infty}x_1f_1(x_1)\dif x_1=a\\
+R(t_1, t_2)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}x_1x_2f_2(x_1, x_2;\tau)\dif x_1\dif x_2=R(\tau)
+\end{gather*}
+即：\\
+其均值与$t$无关，为常数$a$;\\
+其自相关函数只与时间间隔$\tau$有关.\\
+自相关函数的性质:
+\begin{itemize}
+\item \[R(0)=E\pth{\xi^2(t)}\]
+\item \[R(\tau)=R(-\tau)\]
+\item \[|R(\tau)|\leq R(0)\]
+\item \[R(\infty)=E^2(\xi(t))=a^2\]
+\item \[R(0)-R(\infty)=\sigma ^2\]
+\end{itemize}
+\end{itemize}
+\item 广义平稳随机过程\\
+若随机过程$\xi(t)$满足：\\
+其均值与$t$无关，为常数$a$;\\
+其自相关函数只与时间间隔$\tau$有关.\\
+即：
+\begin{gather*}
+E\pth{\xi(t)}=\int_{-\infty}^{\infty}x_1f_1(x_1)\dif x_1=a\\
+R(t_1, t_2)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}x_1x_2f_2(x_1, x_2;\tau)\dif x_1\dif x_2=R(\tau)
+\end{gather*}
+则称其为广义平稳随机过程
+\item 各态历经性\\
+设$x(t)$是随机过程$\xi(t)$的任意一个样本，则其时间均值和时间相关函数分别定义为
+\begin{gather*}
+\overline{a}=\overline{x(t)}=\lim_{T\to\infty}\int_{-\frac{T}{2}}^{\frac{T}{2}}x(t)\dif t\\
+\overline{R(\tau)}=\overline{x(t)x(t+\tau)}=\lim_{T\to\infty}\int_{-\frac{T}{2}}^{\frac{T}{2}}x(t)x(t+\tau)\dif t
+\end{gather*}
+如果随机过程使下式成立
+\[\begin{dcases}a=\overline{a}\\R(\tau)=\overline{R(\tau)}\end{dcases}\]
+则称该随机过程具有各态历经性。\\
+\rem\\
+具有各态历经性的随机过程一定是平稳过程，但平稳过程不一定具有各态历经性。
+\item 维纳--辛钦定理\\
+平稳过程的自相关函数与其功率谱密度是一对傅里叶变换。即：
+\begin{gather*}
+P_{\xi}\pth{\omega} =\int_{-\infty}^{\infty}R\pth{\tau}e^{-j\omega \tau}\dif \tau\\
+R\pth{\tau}=\frac{1}{2\uppi}\int_{-\infty}^{\infty}P_{\xi}\pth{\omega}e^{j\omega \tau}\dif\omega
+\end{gather*}
+
+因此：
+\begin{itemize}
+\item 对功率谱密度积分，可得到平稳过程的总功率
+\[R(0)=\int_{-\infty}^{\infty}P_{\xi}(f)\dif f\]
+\item 各态历经过程的功率谱密度等于过程的功率谱密度
+\[P_{\xi}(f)=P_f(f)\]
+\item 功率谱密度非负且关于$f$是偶函数
+\begin{gather*}
+P_{\xi}(f)\geq 0\\
+P_{\xi}(f)=P_{\xi}(-f)
+\end{gather*}
+\end{itemize}
+\item 平稳随机过程通过线性系统\\
+线性系统输入平稳随机过程$\xi_i(t)$, 输出平稳过程$\xi_o(t)$. 传递函数为$H(f)$. 则：
+\begin{itemize}
+\item 均值
+\[E\pth{\xi_o(t)}=H(0)E\pth{\xi_i(t)}\]
+\item 自相关函数\\
+若线性系统的输入过程是平稳的，则输出过程也是平稳的
+\item 功率谱密度
+\[P_o(f)=|H(f)|^2P_i(f)\]
+\item 概率分布\\
+若线性系统的输入过程是高斯型的，则系统的输出过程也是高斯型的。
+\end{itemize}
+\item 窄带随机过程\\
+若随机过程$\xi(t)$的谱密度集中在中心频率$f_c$附近相对窄的频带范围$\Delta f$内，即满足$\Delta f\ll f_c$的条件，且$f_c$远离零频率，则称$\xi(t)$为窄带随机过程。
+\item 白噪声
+\begin{itemize}
+\item 定义\\
+功率谱密度在所有频率上均为常数的噪声。即：
+\begin{itemize}
+\item $P_n(f)$代表双边功率谱密度
+\[P_n(f)=\frac{n_0}{2}, -\infty < f <\infty\]
+\item $P_n(f)$代表单边功率谱密度
+\[P_n(f)=n_0, 0< f<\infty\]
+\end{itemize}
+\item 自相关函数
+\[R\pth{\tau}=\frac{n_0}{2}\delta\pth{\tau}\]
+\end{itemize}
+\item 低通白噪声\\
+如果白噪声通过理想矩形的低通滤波器或理想低通信道，则输出的噪声称为低通白噪声。\par
+功率谱密度为
+\[P_n(f)=\begin{dcases}\frac{n_0}{2}&|f|\leq f_H\\0&\text{其他}\end{dcases}\]
+\item 带通白噪声\\
+如果白噪声通过理想矩形的带通滤波器或理想带通信道，则其输出的噪声称为带通白噪声。\par
+功率谱密度为
+\[P_n(f)=\begin{dcases}\frac{n_0}{2}&f_c-\frac{B}{2}\leq |f|\leq f_c+\frac{B}{2}\\0&\text{其他}\end{dcases}\]
+\item 信道
+\begin{itemize}
+\item 狭义信道\\
+信道是信号的传输媒介
+\begin{itemize}
+\item 有线信道\\
+如明线、对称电缆、同轴电缆及光纤等
+\item 无线信道\\
+天波、地波、视线传播
+\end{itemize}
+\item 广义信道\\
+包括传播媒介及变换装置
+\begin{itemize}
+\item 调制信道\\
+调制器输出端到解调器输入端的部分
+\item 编码信道\\
+编码器输出端到译码器输入端的部分
+\end{itemize}
+\end{itemize}
+\item 信道的数学模型
+\[e_o(t)=f\pth{e_i(t)}+n(t)\]
+式中：\\
+$e_i(t)$:信道输出端信号电压\\
+$e_o(t)$:信道输入端信号电压\\
+$n(t)$:噪声电压。\par
+通常假设$f\pth{e_i(t)}=k(t)e_i(t)$.\par
+若$k(t)$作随机变化，则称信道为随参信道。\par
+若$k(t)$变化很慢或很小，则称信道为恒参信道。
+\item 调制\par
+把信号转换成适合在信道中传输的形式的一种过程。\par
+调制的实质是频谱搬移。其作用和目的是：
+\begin{itemize}
+\item 将调制信号（基带信号）转换成适合于信道传输的已调信号（频带信号），提高无线通信时的天线辐射效率
+\item 实现信道的多路复用，提高信道利用率
+\item 减少干扰，提高系统抗干扰能力
+\end{itemize}
+\item 调制信号\par
+来自信源的基带信号
+\item 载波调制\par
+用调制信号去控制载波的参数的过程
+\item 载波\par
+未受调制的周期性振荡信号，它可以是正弦波，也可以是非正弦波
+\item 解调（检波）\par
+调制的逆过程，其作用是将已调信号中的调制信号恢复出来
+\item 幅度调制\par
+由调制信号去控制高频载波的幅度，使之随调制信号作线性变化的过程。\par
+设基带信号为$m(t)$, 频谱为$M(\omega)$, 载波为$A\cos\omega_c t$, 则幅度已调信号为
+\[s_m(t)=Am(t)\cos\omega_ct\]
+频谱为
+\[S_m(t)=\frac{A}{2}\pth{M\pth{\omega + \omega_c}+M\pth{\omega-\omega_c}}\]
+
+幅度调制包括调幅(AM)、双边带(DSB)、单边带(SSB)、残留边带(VSB).
+\begin{itemize}
+\item 调幅\par
+若调制信号的平均值为$0$, 则将其叠加一个直流偏量$A_0$后再与载波相乘。\par
+其时域表达式为
+\[s_{AM}(t)=\pth{A_0+m(t)}\cos\omega_ct\]
+频谱为
+\[S_{AM}(t)=\uppi A_0\pth{\delta\pth{\omega+\omega_c}+\delta\pth{\omega -\omega_c}}+\frac{1}{2}\pth{M\pth{\omega+\omega_c}+M\pth{\omega -\omega_c}}\]
+
+其带宽为基带带宽的两倍。\par
+其调制效率为
+\[\eta_{AM}=\frac{\overline{m^2(t)}}{A_0^2+\overline{m^2(t)}}\]
+\item 双边带调制\par
+若调制信号的平均值为$0$, 则其时域表达式为
+\[m_{DSB}(t)=m(t)\cos\omega_c t\]
+频谱为
+\[S_{DSB}(t)=\frac{1}{2}\pth{M\pth{\omega+\omega_c}+M\pth{\omega -\omega_c}}\]
+
+其带宽为基带带宽的两倍。\par
+其调制效率
+\[\eta_{DSB}=100\%\]
+\item 单边带调制\par
+有两种方法：滤波法和相移法
+\begin{itemize}
+\item 滤波法\par
+先产生一个双边带信号，然后让其通过一个边带滤波器，滤除不要的边带。\par
+若要保留上边带，则传递函数
+\[H(\omega)=\begin{cases}1&|\omega|>\omega_c\\0&|\omega|\leq\omega_c\end{cases}\]
+若要保留下边带，则传递函数
+\[H(\omega)=\begin{cases}1&|\omega|<\omega_c\\0&|\omega|\geq\omega_c\end{cases}\]
+技术难点：单边带滤波器要求在$\omega_c$附近具有陡峭的截止特性，才能有效地抑制无用的一个边带。在工程中常采用多级调制滤波的方法。
+\item 相移法\par
+定义对$m(t)$的希尔伯特变换$\hat{m}(t)$为
+\[\hat{m}(t)=m(t)* \frac{1}{\uppi t}\]
+即$m(t)$的正频率滞后$\ext\frac{\uppi}{2}$, 负频率导前$\ext\frac{\uppi}{2}$.\par
+则
+\[\hat{M}(\omega)=M(\omega)\cdot \pth{-j\mathrm{sgn}\omega}\]
+相移法的已调信号的时域表达式为
+\[s_{SSB}(t)=\frac{1}{2}m(t)\cos\omega_ct\pm \frac{1}{2}\hat{m}(t)\sin\omega_ct\]
+\end{itemize}
+\item 残留边带调制\par
+其传递函数满足
+\[H\pth{\omega+\omega_c}+H\pth{\omega-\omega_c}=C\]
+\end{itemize}
+\item 幅度调制的解调
+\begin{itemize}
+\item 相干解调\par
+接收端提供一个与接受的已调载波同频同相的本地载波（称为相干载波），它与接受的已调信号相乘后，经低通滤波器取出低频分量，即可得到原始的系带调制信号。\par
+相干解调适用于所有幅度调制信号
+\item 包络检波\par
+包络检波器由半波或全波整流器和低通滤波器组成。\par
+包络检波适用于$|m(t)_{\max}\leq A_0|$的AM信号
+\end{itemize}
+\item 线性调制系统的抗噪声性能\par
+解调器的输入信噪比
+\[\frac{S_i}{N_i}=\frac{\text{解调器输入已调制信号的平均功率}}{\text{解调器输入噪声的平均功率}}=\frac{\overline{s_m^2(t)}}{\overline{n_i^2(t)}}\]
+
+解调器的输出信噪比
+\[\frac{S_o}{N_o}=\frac{\text{解调器输出已调制信号的平均功率}}{\text{解调器输出噪声的平均功率}}=\frac{\overline{m_o^2(t)}}{\overline{n_o^2(t)}}\]
+
+制度增益
+\[G=\frac{\frac{S_o}{N_o}}{\frac{S_i}{N_i}}\]
+
+若白噪声的单边功率谱密度为$n_0$, 已调信号的频带宽度为$B$, 则解调器的输入噪声功率为
+\[N_i=n_0B\]
+
+AM包络检波在大信噪比时制度增益为$\ext\frac{2}{3}$, 小信噪比时出现门限效应。\par
+DSB调制系统制度增益为$2$.\par
+SSB调制系统制度增益为$1$.
+\item 非线性调制\par
+在调制时，若载波的频率随调制信号变化，称为调频(FM); 若载波的相位随调制信号变化，称为调相(PM). 调频和调相统称为角度调制。
+\begin{itemize}
+\item 一般表达式\par
+角度调制信号的时域表达式为
+\[s_m(t)=A\cos\pth{\omega_ct+\phi(t)}\]
+瞬时相位为$\omega_ct+\phi(t)$\\
+瞬时相位偏移为$\phi(t)$\\
+瞬时角速度为$\ext\frac{\dif \pth{\omega_ct+\phi(t)}}{\dif t}$\\
+瞬时频偏为$\ext\frac{\dif \phi(t)}{\dif t}$\par
+相位调制为瞬时相位偏移随调制信号作线性变化。\par
+频率调制为瞬时频偏随调制信号成比例变化。
+\item 单音调制\par
+设调制信号为
+\[m(t)=A_m\cos 2\uppi f_mt\]
+则PM信号
+\[s_{PM}(t)=A\cos\pth{\omega_c t+m_P\cos\omega_m t}\]
+其中$m_P=K_PA_m$称为调相指数。\par
+FM信号
+\[s_{FM}(t)=A\cos\pth{\omega_c t+m_f\sin\omega_m t}\]
+其中$\ext m_f=\frac{K_fA_m}{\omega_m}$称为调频指数\\
+$\Delta\omega =K_fA_m$称为最大角频偏\\
+$\Delta f=m_f\cdot f_m$称为最大频偏
+\item FM与PM的关系\par
+如果将调制信号先微分，而后进行调频，得到的是调相波，称为间接调相\par
+如果将调制信号先积分，而后进行调相，得到的是调频波，称为间接调频
+\item 窄带调频\par
+如果FM信号的最大瞬时相位偏移满足
+\[\left| K_f\int_{-\infty}^tm\pth{\tau}\dif\tau\ll\frac{\uppi}{6}\right|\]
+则称之为窄带调频。\par
+其时域表达式为
+\[s_{NBFM}(t)\approx A\cos\omega_ct-\pth{AK_f\int m\pth{\tau}\dif\tau}\sin\omega_ct\]
+频域表达式为
+\[S_{NBFM}(t)=\uppi A\pth{\delta\pth{\omega+\omega_c}+\delta\pth{\omega -\omega_c}}+\frac{AK_f}{2}\pth{\frac{M\pth{\omega-\omega_c}}{\omega-\omega_c}-\frac{M\pth{\omega +\omega_c}}{\omega+\omega_c}}\]
+窄带调频的带宽
+\[B_{FM}\approx 2f_m\]
+\item 宽带调频\par
+不满足窄带调频条件的FM信号即为宽带调频。\par
+设$f_m$是调制信号的最高频率，$m_f$是最大频偏$\Delta f$与$f_m$之比，则
+\[B_{FM}=2\pth{m_f+1}f_m=2\pth{\Delta f+f_m}\]
+\item 调频方法
+\begin{itemize}
+\item 直接调频\par
+用调制信号直接去控制载波振荡器的频率，使其按调制信号的规律线性地变化。\par
+优点：可以获得较大的频偏\par
+缺点：频率稳定度不高
+\item 间接调频\par
+先将调制信号积分，然后对载波进行调相，即可产生一个窄带调频信号，再经$n$次倍频器得到宽带调频信号
+\end{itemize}
+\item 解调方法
+\begin{itemize}
+\item 非相干解调\par
+调频信号必须产生正比于输入频率的输出电压
+\item 相干解调
+\end{itemize}
+\end{itemize}
+\item 数字基带信号\par
+未经调制的数字信号，它所占据的频谱是从零频或很低频率开始的。
+\item 数字基带传输系统\par
+不经载波调制而直接传输数字基带信号的系统，常用于传输距离不太远的情况
+\item 数字带通传输系统\par
+包括调制和解调过程的传输系统
+\item 数字信号常用码型
+\begin{itemize}
+\item 单极性波形\par
+电脉冲之间无间隔，极性单一，易于用TTL, CMOS电路产生；有直流分量，要求传输线路具有直流传输能力，因而不适应有交流耦合的远距离传输，只适用于计算机内部或极近距离的传输
+\item 双极性波形\par
+当"1"和"0"等概率出现时无直流分量，有利于在信道中传输，并且在接收端恢复信号的判决电平为零值，因而不收信道特性变化的影响，抗干扰能力也较强。
+\item 单极性非归零\par
+具有直流分量；判决电平不能稳定在最佳电平；不能直接提供同步信号；要求信道的一端接地
+\item 单极性归零\par
+具有直流分量；可直接提取位定时
+\item 双极性非归零\par
+无直流分量；不收信道特性变化的影响；可以在电缆等无接地的传输线上传输
+\item 双极性归零\par
+除了具有双极性非归零码的一般特点以外，还可以通过简单的变换电路变换为单极性归零码，从而可以提取同步信号
+\end{itemize}
+\item 数字基带信号传输系统
+\begin{itemize}
+\item 信道信号形成器（发送滤波器）\par
+压缩输入信号频带，把传输码变换成适宜于信道传输的基带信号波形
+\item 信道\par
+信道的传输特性一般不满足无失真传输条件，因此会引起传输波形的失真。另外信道还会引入噪声$n(t)$, 并假设它是均值为0的高斯白噪声。
+\item 接受滤波器\par
+它用来接收信号，滤除信道噪声和其他干扰，对信道特性进行均衡，使输出的系带波形有利于抽样判决
+\item 抽样判决器\par
+对接收滤波器的输出波形进行抽样判决，以恢复或再生基带信号
+\item 同步提取\par
+用同步提取电路从接收信号中提取定时脉冲
+\end{itemize}
+\item 码间串扰\par
+原因：信道传输总特性不理想，导致前后码元的波形畸变并使前面波形出现很长的拖尾，从而对当前码元的判决造成干扰
+\begin{itemize}
+\item 频带受限——乘性干扰\par
+经频带受限信道传输的信号：信道的带宽受限导致前后码元的波形产生畸变和延展。
+\item 信道噪声——加性干扰\par
+经有噪声信道传输的信号，信号的幅度受到干扰
+\end{itemize}
+\item 无码间串扰的条件
+\begin{itemize}
+\item 时域条件\par
+系带传输系统的冲激响应波形$h(t)$仅在本码元的抽样时刻上有最大值，并在其他码元的抽样时刻上均为$0$, 则可消除码间串扰
+\[h(kT_s)=\begin{dcases}1&k=0\\0&k\in\Z, k\neq 0\end{dcases}\]
+\item 频域条件（奈奎斯特第一准则）
+\[\sum_iH\pth{\omega +\frac{2\uppi i}{T_B}}=T_B,\quad |\omega|\leq \frac{\uppi}{T_B}\]
+\end{itemize}
+\item 无码间串扰传输特性的设计
+\begin{itemize}
+\item 理想低通特性\par
+带宽
+\[B=\frac{1}{2}T_B\]
+频带利用率为$2\Baud\per\hertz$
+\item 余弦滚降特性
+\end{itemize}
+\end{enumerate}
+\end{document}
